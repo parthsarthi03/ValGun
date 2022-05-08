@@ -66,11 +66,11 @@ async function main() {
     score: 0
   } as Politician as unknown as Value);
 
-  await delay(1000);
+  await delay(5000);
 
   addUserRating(0, 5);
 
-  await delay(1000);
+  await delay(10000);
 
   gun.getValidated('politician1', (data, key) =>
     console.log(`Got validated ${key}: ${JSON.stringify(data)}`)

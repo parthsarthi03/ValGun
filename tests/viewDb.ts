@@ -12,13 +12,13 @@ async function printDb(name: string) {
 
 async function main() {
   // await printDb('blocks-client');
-  await printDb('blocks-server');
+  await printDb('blocks-server1');
   // await printDb('entries-client');
-  await printDb('entries-server');
+  await printDb('entries-server1');
   // await printDb('validated-client');
-  await printDb('validated-server');
+  await printDb('validated-server1');
   // await printDb('validated-client');
-  await printDb('confirmed-server');
+  await printDb('confirmed-server1');
 }
 
 main();

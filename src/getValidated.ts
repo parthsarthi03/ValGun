@@ -9,7 +9,7 @@ export default function getValidated<T extends Value>(
   this.eventEmitter.on(`onGetValidated_${key}`, (hash) => {
     if (hash) {
       this.get(`hash${hash}`).once((data) =>
-        callback(data ? (JSON.parse(data.data) as T) : undefined, key)
+        callback(data ? (JSON.parse(data.data).value as T) : undefined, key)
       );
     } else {
       callback(undefined, key);

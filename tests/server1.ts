@@ -12,7 +12,7 @@ async function main() {
     web: server,
     isLight: false,
     dbId: 'server1',
-    radisk: false,
+    radisk: true,
     validate
   });
 }

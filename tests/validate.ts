@@ -51,17 +51,21 @@ export async function validate(gun: ExtendedGun, key: string, value: Value) {
       if (gun.node.type === 'full') {
         const hash = await gun.node.getValidated(voteObject.politician);
         if (!hash) return false;
-        const politician = await new Promise<Politician>((resolve) => {
-          gun.get(`hash${hash}`).once((data) => resolve(data as Politician));
-        });
+        const politician = await new Promise<Politician | undefined>(
+          (resolve) => {
+            gun
+              .get(`hash${hash}`)
+              .once((data) =>
+                resolve(
+                  data ? (JSON.parse(data.data).value as Politician) : undefined
+                )
+              );
+          }
+        );
         if (!politician) return false;
         politician.ratingCount++;
         politician.score += voteObject.rating;
-        gun.putValidated(
-          voteObject.politician,
-          politician as unknown as Value,
-          false
-        );
+        gun.putValidated(voteObject.politician, politician as unknown as Value);
       }
       return true;
     } else if (key.startsWith('politician')) {
@@ -70,9 +74,7 @@ export async function validate(gun: ExtendedGun, key: string, value: Value) {
       if (politician.ratingCount !== 0) return false;
       if (politician.score !== 0) return false;
       if (gun.node.type === 'full') {
-        console.log('START');
         const hash = await gun.node.getValidated(key);
-        console.log('FOUND HASH', hash);
         if (hash) return false;
       }
       return true;

@@ -17,9 +17,10 @@ export default function putValidated<T extends Value>(
       data: canonicalize(data)
     });
   if (this.node.type === 'full') {
-    this.node.storeKeyHash(key, data);
+    this.node.storeKeyHash(key, value);
   }
   console.log(`entries-${this._.opt.dbId}`);
+  console.log('PUT', objectToHash(data));
   return this.get(`hash${objectToHash(data)}`).put({
     data: canonicalize(data)
   });

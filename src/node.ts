@@ -37,8 +37,8 @@ export default class Node extends EventEmitter {
   public readonly versionRegex = /0\.8\.\d+/;
   public messageTimeoutDelay = 5000;
   public proofOfWorkTarget =
-    '00001af000000000000000000000000000000000000000000000000000000000';
-  public readonly commonPrefixParameter = 5; // Number of blocks that have to be mined on top of it before a block is confirmed
+    '0000faf000000000000000000000000000000000000000000000000000000000';
+  public readonly commonPrefixParameter = 3; // Number of blocks that have to be mined on top of it before a block is confirmed
   public genesisId =
     '00000000a420b7cefa2b7730243316921ed59ffe836e111ca3801f82a4f5360e';
   public readonly socketToIncompleteMessages = new Map<
@@ -150,6 +150,10 @@ export default class Node extends EventEmitter {
       }
     }
     this.mempool.push(entry);
+    if (this.miningBlock)
+      this.miningBlock.entries = this.miningBlock.entries.filter(
+        (otherEntry) => otherEntry.key !== key
+      );
     this.miningBlock?.entries.push(entry);
     this.restartMiner();
   }

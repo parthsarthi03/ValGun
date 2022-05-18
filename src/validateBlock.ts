@@ -59,7 +59,7 @@ async function reorgMempool(
     const currentNewChainBlock = await getBlock(
       node,
       socket,
-      currentOldChainBlockId
+      currentNewChainBlockId
     );
     if (!currentNewChainBlock.prevId) {
       throw Error('Reached genesis block');

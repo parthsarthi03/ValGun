@@ -6,7 +6,8 @@ process.on('message', (block: Block) => {
   let nonce = BigInt(`0x${block.nonce}`);
   while (objectToHash(block) >= block.T) {
     nonce++;
-    block.nonce = nonce.toString(16);
+    const newNonce = nonce.toString(16);
+    block.nonce = '0'.repeat(64 - newNonce.length) + newNonce;
     block.created = Date.now();
   }
   console.log('BLOCK MINED:');
